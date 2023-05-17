@@ -16,6 +16,6 @@ class Student(models.Model):
        return f'{self.first_name} {self.last_name}'
     
     class Meta:
-        verbose_name = 'The Students'
-        verbose_name_plural = 'The Students'
+        verbose_name = 'The Students' #define title
+        verbose_name_plural = 'The Students' #define title plural
    
