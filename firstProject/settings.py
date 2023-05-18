@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'classProject',
     'relations',
     'student_api',
+    'fbv_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
