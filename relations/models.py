@@ -36,3 +36,12 @@ class Address(models.Model):
 
     def __str__(self):
         return self.address
+    
+
+class Product(models.Model):
+    brand = models.CharField(verbose_name='marka',max_length=128)
+    product = models.CharField(max_length=128)
+    account = models.ManyToManyField(Account)
+
+    def __str__(self):
+        return f'{self.brand} {self.product}'
