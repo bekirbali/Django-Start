@@ -20,3 +20,28 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    
+
+
+COUNTRIES=(
+    ('tr', 'Turkey'),
+    ('us', 'USA'),
+    ('cn', 'Canada')
+)
+class Address(models.Model):
+    address = models.CharField(max_length=256)
+    country = models.TextField(max_length=2, choices=COUNTRIES)
+    phone = models.CharField(max_length=11)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.address
+    
+
+class Product(models.Model):
+    brand = models.CharField(verbose_name='marka',max_length=128)
+    product = models.CharField(max_length=128)
+    account = models.ManyToManyField(Account)
+
+    def __str__(self):
+        return f'{self.brand} {self.product}'
