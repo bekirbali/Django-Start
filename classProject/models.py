@@ -21,9 +21,17 @@ class Student(models.Model):
         ordering = ["-first_name"]
    
 
+AGES = (
+    (10, 'age=10'),
+    (20, 'age=20'),
+    (30, 'age=30'),
+    (40, 'age=40'),
+    (50, 'age=50'),
+    )
+
 class Lesson(models.Model):
     first_name = models.CharField(max_length=50)
-    age = models.PositiveIntegerField(default=0, null=True, blank=True)
+    age = models.PositiveIntegerField(default=0, null=True, blank=True, choices=AGES)
 
     def __str__(self):
         return self.first_name
