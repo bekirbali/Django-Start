@@ -7,6 +7,7 @@ from .models import Student
 from .serializers import StudentSerializer
 
 from rest_framework import status
+from rest_framework.generics import get_object_or_404
 
 # Create your views here.
 
@@ -33,3 +34,69 @@ def student_create(request):
     else:
         
         return Response({'message':'bad request'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view()
+def student_detail(request, pk):
+    # student = Student.objects.get(id=pk)
+    student = get_object_or_404(Student, id=pk)
+    serializer = StudentSerializer(student)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+def student_update(request, pk):
+    student = get_object_or_404(Student, id=pk)
+    serializer = StudentSerializer(instance=student, data=request.data) # instance yazsamda oluyor yazmasamda
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'message':'saved successfully'}, status=status.HTTP_201_CREATED)
+    else:
+        return Response({'message':'bad request', 'data':serializer.data}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view()
+def student_delete(request, pk):
+    # student = Student.objects.get(id=pk)
+    student = get_object_or_404(Student, id=pk)
+    student.delete()
+    return Response({'message':'deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def student_list_create(request):
+    if request.method == 'GET':
+        students = Student.objects.all() 
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data)
+    else:
+        serializer = StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'saved successfully'}, status=status.HTTP_201_CREATED)
+        else:
+        
+            return Response({'message':'bad request'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+@api_view(['GET','PUT', 'PATCH', 'DELETE'])
+def student_get_put_delete(request, pk):
+    match request.method:
+        case 'GET':
+            student = get_object_or_404(Student, id=pk)
+            serializer = StudentSerializer(student)
+            return Response(serializer.data)
+        case 'PUT':
+            student = get_object_or_404(Student, id=pk)
+            serializer = StudentSerializer(instance=student, data=request.data) # instance yazsamda oluyor yazmasamda
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'message':'saved successfully'}, status=status.HTTP_201_CREATED)
+            else:
+                return Response({'message':'bad request', 'data':serializer.data}, status=status.HTTP_400_BAD_REQUEST)
+        case 'DELETE':
+            student = get_object_or_404(Student, id=pk)
+            student.delete()
+            return Response({'message':'deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
