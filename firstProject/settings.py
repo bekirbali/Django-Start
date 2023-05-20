@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'relations',
     'student_api',
     'fbv_app',
+    'cbv_app',
     'rest_framework',
 ]
 
