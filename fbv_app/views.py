@@ -83,13 +83,12 @@ def student_list_create(request):
 
 @api_view(['GET','PUT', 'PATCH', 'DELETE'])
 def student_get_put_delete(request, pk):
+    student = get_object_or_404(Student, id=pk)
     match request.method:
         case 'GET':
-            student = get_object_or_404(Student, id=pk)
             serializer = StudentSerializer(student)
             return Response(serializer.data)
         case 'PUT':
-            student = get_object_or_404(Student, id=pk)
             serializer = StudentSerializer(instance=student, data=request.data) # instance yazsamda oluyor yazmasamda
             if serializer.is_valid():
                 serializer.save()
@@ -97,6 +96,5 @@ def student_get_put_delete(request, pk):
             else:
                 return Response({'message':'bad request', 'data':serializer.data}, status=status.HTTP_400_BAD_REQUEST)
         case 'DELETE':
-            student = get_object_or_404(Student, id=pk)
             student.delete()
             return Response({'message':'deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
