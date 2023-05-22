@@ -47,6 +47,7 @@ class Student_list_crud(APIView):
         student.delete()
         return Response({'message':'data deleted'}, status=status.HTTP_204_NO_CONTENT)
     
+    #put throws error due to no pk
 class Student_GPUD(APIView):
     def get(self,request, pk=0):
         if pk:
