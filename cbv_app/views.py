@@ -81,3 +81,19 @@ class Student_GPUD(APIView):
         student = get_object_or_404(Student, id=pk)
         student.delete()
         return Response({'message':'data deleted'}, status=status.HTTP_204_NO_CONTENT)
+    
+
+    # ---------------------------------------------
+
+from rest_framework.generics import GenericAPIView
+from rest_framework import mixins
+
+class StudentGenericListCreate(mixins.ListModelMixin, mixins.CreateModelMixin, GenericAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+    
