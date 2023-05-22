@@ -27,7 +27,7 @@ urlpatterns = [
     path('', include('classProject.urls')),
     path('student_api/', include('student_api.urls')),
     path('fbv/', include('fbv_app.urls')),
-    path('cbv/', include('fbv_app.urls')),
+    path('cbv/', include('cbv_app.urls')),
 ]
 
 from django.conf import settings
