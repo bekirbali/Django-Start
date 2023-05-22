@@ -97,3 +97,16 @@ class StudentGenericListCreate(mixins.ListModelMixin, mixins.CreateModelMixin, G
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
     
+
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+
+class StudentMVS(ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    @action(methods=['GET'], detail=False)
+    def count(self, request):
+        return Response({
+            'count':Student.objects.count()
+        })
